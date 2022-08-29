@@ -14,7 +14,10 @@ my_supersecret_key=
 # Group ID: 214
 # https://comp.umsl.edu/gitlab/cmp-sci-3010
 # Group ID: 65
+# used to fetch data
 group_id="65"
+
+# only used for directory name purposes
 group_name="cmp-sci-3010"
 
 # Where to put the repos
@@ -27,7 +30,7 @@ WORKHOME="${HOME}/umsl_classes/$(echo $group_name)"
 if [ -d "${WORKHOME}" ]; then
 	# finds(lists) the directories containing a .git dir full relative path, remove the '/.git',
 	# xargs loads the results into git using the -C switch to set the working directory
-	find "${WORKHOME}" -name ".git" -type d | sed 's/\/.git//' |  xargs -P8 -I{} git -C {} pull
+	find "${WORKHOME}" -name ".git" -type d | sed 's/\/.git//' | xargs -P8 -I{} git -C {} pull
 else
 	mkdir -p "${WORKHOME}"
 	cd "${WORKHOME}"
