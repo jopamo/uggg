@@ -1,0 +1,35 @@
+#!/bin/bash
+# uggg - UMSL Gitlab Group Grabber
+#
+#
+#
+# gitlab personal auth token
+# https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html
+#
+# my_supersecret_key=xxxx-xxxxxxxxxxxxxxxxxxxx
+my_supersecret_key=
+
+# gitlab group id number
+# https://comp.umsl.edu/gitlab/cmp-sci-2261
+# Group ID: 214
+# https://comp.umsl.edu/gitlab/cmp-sci-3010
+# Group ID: 65
+group_id="65"
+group_name="cmp-sci-3010"
+
+# Where to put the repos
+WORKHOME="${HOME}/umsl_classes/$(echo $group_name)"
+
+############################################################
+#DO NOT CHANGE BELOW THIS LINE!
+############################################################
+
+if [ -d "${WORKHOME}" ]; then
+	# finds(lists) the directories containing a .git dir full relative path, remove the '/.git',
+	# xargs loads the results into git using the -C switch to set the working directory
+	find "${WORKHOME}" -name ".git" -type d | sed 's/\/.git//' |  xargs -P8 -I{} git -C {} pull
+else
+	mkdir -p "${WORKHOME}"
+	cd "${WORKHOME}"
+	for repo in $(curl --header "PRIVATE-TOKEN:$(echo $my_supersecret_key)" -s "https://comp.umsl.edu/gitlab/api/v4/groups/$(echo $group_id)/projects?include_subgroups=true&per_page=100" | jq '.[].http_url_to_repo' | tr -d '"'); do git clone $(echo $repo | sed "s/comp/oauth2:$(echo $my_supersecret_key)@comp/"); done;
+fi
