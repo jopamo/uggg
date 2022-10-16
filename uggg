@@ -27,8 +27,6 @@ WORKHOME="${HOME}/umsl_classes/$(echo $group_name)"
 #DO NOT CHANGE BELOW THIS LINE!
 ############################################################
 
-WORKHOME="${HOME}/$(echo $group_name)"
-
 if [ -d "${WORKHOME}" ]; then
 	# finds(lists) the directories containing a .git dir full relative path, remove the '/.git',
 	# xargs loads the results into git using the -C switch to set the working directory
