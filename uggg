@@ -11,9 +11,9 @@ my_supersecret_key=""
 
 # gitlab group id number
 # https://comp.umsl.edu/gitlab/cmp-sci-2261
-# Group ID: 214
+#
 # https://comp.umsl.edu/gitlab/cmp-sci-3010
-# Group ID: 65
+#
 # used to fetch data
 group_id="65"
 
